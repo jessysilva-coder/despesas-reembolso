@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lançamento de Despesas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0D0D12;
+      --bg2:        #12121A;
+      --surface:    #17171F;
+      --surface2:   #1E1E28;
+      --border:     #2A2A38;
+      --border-lit: #3D3D55;
+      --ink:        #EEEEF5;
+      --ink-muted:  #7878A0;
+      --purple:     #8B5CF6;
+      --purple-lt:  #8B5CF620;
+      --purple-mid: #8B5CF640;
+      --green:      #34D399;
+      --green-lt:   #34D39918;
+      --radius:     14px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 56px 16px 80px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* background glow blobs */
+    body::before {
+      content: '';
+      position: fixed; top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, #8B5CF615 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed; bottom: -80px; right: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(ellipse, #34D39910 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      margin-bottom: 44px;
+      position: relative; z-index: 1;
+    }
+    header .tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 500; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--green);
+      border: 1px solid #34D39930;
+      padding: 5px 14px; border-radius: 99px; margin-bottom: 18px;
+      background: var(--green-lt);
+    }
+    header .tag::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--green); border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .4; transform: scale(.7); }
+    }
+    header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800; line-height: 1.05;
+      background: linear-gradient(135deg, #EEEEF5 30%, #8B5CF6 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header p {
+      margin-top: 12px; font-size: 15px;
+      color: var(--ink-muted); font-weight: 300; letter-spacing: .01em;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 40px;
+      width: 100%; max-width: 580px;
+      position: relative; z-index: 1;
+      box-shadow: 0 0 0 1px #8B5CF608, 0 24px 64px rgba(0,0,0,.4);
+    }
+    /* top purple line */
+    .card::before {
+      content: '';
+      position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--purple), transparent);
+      border-radius: 99px;
+    }
+
+    /* ── Form ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .full    { grid-column: 1 / -1; }
+    .field   { display: flex; flex-direction: column; gap: 7px; }
+
+    label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    input, select, textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px; color: var(--ink);
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 15px;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+      outline: none; width: 100%;
+      -webkit-appearance: none;
+    }
+    input::placeholder, textarea::placeholder { color: #44445A; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--purple);
+      background: var(--surface2);
+      box-shadow: 0 0 0 3px var(--purple-lt);
+    }
+    /* date input color fix */
+    input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.5) sepia(1) saturate(2) hue-rotate(220deg); cursor: pointer; }
+    select { cursor: pointer; }
+    select option { background: var(--surface2); }
+    textarea { resize: vertical; min-height: 88px; }
+
+    .currency-wrap { position: relative; }
+    .currency-wrap .prefix {
+      position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+      font-size: 13px; font-weight: 500; color: var(--ink-muted); pointer-events: none;
+    }
+    .currency-wrap input { padding-left: 38px; }
+
+    /* ── Divider ── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 26px 0; }
+
+    /* ── Submit button ── */
+    .btn-submit {
+      width: 100%; padding: 15px;
+      background: linear-gradient(135deg, #7C3AED, #8B5CF6);
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 15px; font-weight: 700;
+      border: none; border-radius: var(--radius);
+      cursor: pointer; letter-spacing: .03em;
+      transition: opacity .2s, transform .1s, box-shadow .2s;
+      margin-top: 6px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      position: relative; overflow: hidden;
+    }
+    .btn-submit::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,.08));
+      pointer-events: none;
+    }
+    .btn-submit:hover  { opacity: .9; box-shadow: 0 8px 24px #8B5CF640; }
+    .btn-submit:active { transform: scale(.98); }
+    .btn-submit:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.3); border-top-color: #fff;
+      border-radius: 50%; animation: spin .7s linear infinite; display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed; bottom: 32px; left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: var(--surface2);
+      border: 1px solid var(--border-lit);
+      color: var(--ink);
+      padding: 13px 22px; border-radius: 99px;
+      font-size: 14px; font-weight: 500;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s, transform .3s;
+      white-space: nowrap; z-index: 100;
+      box-shadow: 0 8px 32px rgba(0,0,0,.5);
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    #toast.ok   { border-color: var(--green); color: var(--green); }
+    #toast.erro { border-color: #F87171; color: #F87171; }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 28px; font-size: 12px;
+      color: #44445A; text-align: center;
+      position: relative; z-index: 1;
+    }
+
+    @media (max-width: 500px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .card   { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="tag">Reembolso</div>
+    <h1>Lançamento de Despesas</h1>
+    <p>Preencha o formulário para solicitar seu reembolso.</p>
+  </header>
+
+  <div class="card">
+    <div class="grid-2">
+
+      <div class="field full">
+        <label for="nome">Nome do solicitante</label>
+        <input type="text" id="nome" placeholder="Seu nome completo" autocomplete="name"/>
+      </div>
+
+      <div class="field">
+        <label for="data">Data da despesa</label>
+        <input type="date" id="data"/>
+      </div>
+
+      <div class="field">
+        <label for="categoria">Categoria</label>
+        <select id="categoria">
+          <option value="" disabled selected>Selecione…</option>
+          <option>Alimentação</option>
+          <option>Transporte</option>
+          <option>Hospedagem</option>
+          <option>Material de escritório</option>
+          <option>Saúde</option>
+          <option>Tecnologia</option>
+          <option>Outros</option>
+        </select>
+      </div>
+
+      <div class="field full">
+        <label for="descricao">Descrição / Motivo</label>
+        <textarea id="descricao" placeholder="Descreva brevemente a despesa e sua finalidade…"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="valor">Valor</label>
+        <div class="currency-wrap">
+          <span class="prefix">R$</span>
+          <input type="number" id="valor" placeholder="0,00" min="0" step="0.01"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="pagamento">Forma de pagamento</label>
+        <select id="pagamento">
+          <option value="" disabled selected>Selecione…</option>
+          <option>Cartão de crédito próprio</option>
+          <option>Cartão de débito próprio</option>
+          <option>Dinheiro</option>
+          <option>Pix</option>
+          <option>Transferência bancária</option>
+        </select>
+      </div>
+
+    </div>
+
+    <hr class="divider"/>
+
+    <button class="btn-submit" id="btn" onclick="salvar()">
+      <span id="btn-text">Enviar solicitação</span>
+      <span class="spinner" id="spinner"></span>
+    </button>
+  </div>
+
+  <footer>Seus dados são enviados com segurança.</footer>
+  <div id="toast"></div>
+
+  <script>
+    // ── CONFIG ──────────────────────────────────────────
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3dGrdYNciz8kNnvNhSUEzecGq70pz64BE3-ZddvpBU7k4toafZJA8h7MK8P-8-W0Qvg/exec';
+    // ────────────────────────────────────────────────────
+
+    document.getElementById('data').valueAsDate = new Date();
+
+    function toast(msg, tipo = '') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'show ' + tipo;
+      setTimeout(() => { t.className = ''; }, 3500);
+    }
+
+    async function salvar() {
+      const campos = {
+        nome:      document.getElementById('nome').value.trim(),
+        data:      document.getElementById('data').value,
+        categoria: document.getElementById('categoria').value,
+        descricao: document.getElementById('descricao').value.trim(),
+        valor:     document.getElementById('valor').value,
+        pagamento: document.getElementById('pagamento').value,
+      };
+
+      if (Object.values(campos).some(v => !v)) {
+        toast('⚠️ Preencha todos os campos.', 'erro'); return;
+      }
+
+      const btn = document.getElementById('btn');
+      document.getElementById('btn-text').textContent = 'Enviando…';
+      document.getElementById('spinner').style.display = 'block';
+      btn.disabled = true;
+
+      campos.valor = parseFloat(campos.valor).toFixed(2);
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(campos)
+        });
+        ['nome','descricao','valor'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('categoria').selectedIndex = 0;
+        document.getElementById('pagamento').selectedIndex = 0;
+        document.getElementById('data').valueAsDate = new Date();
+        toast('✓ Despesa registrada com sucesso!', 'ok');
+      } catch {
+        toast('✗ Erro ao enviar. Tente novamente.', 'erro');
+      } finally {
+        document.getElementById('btn-text').textContent = 'Enviar solicitação';
+        document.getElementById('spinner').style.display = 'none';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
