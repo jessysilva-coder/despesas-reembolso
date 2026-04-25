@@ -22,7 +22,6 @@
       --purple2:   #A78BFA;
       --purple-lt: #8B5CF615;
       --green:     #34D399;
-      --green2:    #6EE7B7;
       --green-lt:  #34D39912;
       --amber:     #FBBF24;
       --amber-lt:  #FBBF2412;
@@ -102,45 +101,40 @@
 
     /* ── Filters ── */
     .filters {
-      display: flex; gap: 12px; flex-wrap: wrap;
+      display: flex; gap: 10px; flex-wrap: wrap;
       margin-bottom: 28px; align-items: center;
     }
-    .filter-label { font-size: 12px; color: var(--ink-muted); font-weight: 500; letter-spacing: .05em; }
+    .filter-label { font-size: 12px; color: var(--ink-muted); font-weight: 500; letter-spacing: .05em; white-space: nowrap; }
     .filter-select {
       font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
       color: var(--ink); background: var(--surface);
       border: 1px solid var(--border); border-radius: 10px;
-      padding: 8px 14px; cursor: pointer; outline: none;
-      transition: border-color .2s;
-      -webkit-appearance: none; appearance: none;
+      padding: 8px 30px 8px 14px; cursor: pointer; outline: none;
+      transition: border-color .2s; -webkit-appearance: none; appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236666A0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 10px center;
-      padding-right: 30px;
+      background-color: var(--surface);
     }
     .filter-select:focus { border-color: var(--purple); }
     .filter-select option { background: var(--surface2); }
-
     .filter-badge {
       font-size: 12px; font-weight: 600; color: var(--purple2);
       background: var(--purple-lt); border: 1px solid #8B5CF625;
-      padding: 4px 12px; border-radius: 99px;
-      display: none;
+      padding: 4px 12px; border-radius: 99px; display: none;
     }
     .filter-badge.visible { display: inline-block; }
-
     .btn-clear {
       font-size: 12px; font-weight: 500; color: var(--ink-muted);
       background: none; border: 1px solid var(--border);
       border-radius: 8px; padding: 6px 12px; cursor: pointer;
-      transition: color .2s, border-color .2s;
-      display: none;
+      transition: color .2s, border-color .2s; display: none;
     }
     .btn-clear.visible { display: inline-block; }
     .btn-clear:hover { color: var(--ink); border-color: var(--border-lt); }
 
     /* ── KPIs ── */
     .kpi-row {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
       gap: 16px; margin-bottom: 24px;
     }
     .kpi {
@@ -171,7 +165,7 @@
     .kpi.amber  .kpi-value { color: var(--amber); }
     .kpi-sub { font-size: 12px; color: var(--ink-muted); margin-top: 6px; }
 
-    /* ── Charts ── */
+    /* ── Charts grid ── */
     .charts-grid {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 16px; margin-bottom: 16px;
@@ -186,33 +180,29 @@
 
     .chart-header {
       display: flex; align-items: flex-start;
-      justify-content: space-between; gap: 12px;
-      margin-bottom: 20px;
+      justify-content: space-between; gap: 12px; margin-bottom: 20px;
     }
     .chart-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; }
     .chart-sub   { font-size: 12px; color: var(--ink-muted); margin-top: 3px; }
 
-    /* sort toggle */
-    .sort-toggle {
-      display: flex; gap: 4px; flex-shrink: 0;
-    }
-    .sort-btn {
+    /* toggle buttons shared style */
+    .toggle-group { display: flex; gap: 4px; flex-shrink: 0; }
+    .toggle-btn {
       font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
-      padding: 5px 10px; border-radius: 8px; cursor: pointer;
+      padding: 5px 11px; border-radius: 8px; cursor: pointer;
       border: 1px solid var(--border); background: var(--bg2);
       color: var(--ink-muted); transition: all .2s; white-space: nowrap;
     }
-    .sort-btn.active {
-      background: var(--purple-lt); border-color: #8B5CF640;
-      color: var(--purple2);
+    .toggle-btn.active {
+      background: var(--purple-lt); border-color: #8B5CF640; color: var(--purple2);
     }
-    .sort-btn:hover:not(.active) { border-color: var(--border-lt); color: var(--ink); }
+    .toggle-btn:hover:not(.active) { border-color: var(--border-lt); color: var(--ink); }
 
     .chart-wrap { position: relative; height: 230px; }
-    .chart-wrap.tall { height: 260px; }
+    .chart-wrap.tall { height: 270px; }
 
     /* ── Ranking ── */
-    .ranking-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .ranking-list { display: flex; flex-direction: column; gap: 9px; margin-top: 4px; }
     .rank-item {
       display: flex; align-items: center; gap: 12px;
       padding: 11px 14px; border-radius: 12px;
@@ -226,13 +216,18 @@
     }
     .rank-num.gold   { color: #FBBF24; }
     .rank-num.silver { color: #94A3B8; }
-    .rank-num.bronze { color: #B87333; }
+    .rank-num.bronze { color: #CD7F32; }
     .rank-name { flex: 1; font-size: 14px; font-weight: 500; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .rank-bar-wrap { flex: 2; height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; min-width: 40px; }
     .rank-bar { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--purple), var(--green)); transition: width .8s cubic-bezier(.4,0,.2,1); }
     .rank-val { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--green); white-space: nowrap; flex-shrink: 0; }
+    .rank-more {
+      text-align: center; font-size: 12px; color: var(--ink-muted);
+      padding: 8px; border-radius: 10px;
+      border: 1px dashed var(--border); margin-top: 4px;
+    }
 
-    /* ── Empty ── */
+    /* ── Empty / Loading ── */
     .estado {
       padding: 48px 20px; text-align: center; color: var(--ink-muted);
       display: flex; flex-direction: column; align-items: center; gap: 14px;
@@ -248,13 +243,12 @@
     /* ── Popup ── */
     .popup-overlay {
       position: fixed; inset: 0; z-index: 100;
-      background: rgba(0,0,0,.65); backdrop-filter: blur(6px);
+      background: rgba(0,0,0,.7); backdrop-filter: blur(6px);
       display: flex; align-items: center; justify-content: center;
       padding: 20px; opacity: 0; pointer-events: none;
       transition: opacity .25s;
     }
     .popup-overlay.open { opacity: 1; pointer-events: all; }
-
     .popup {
       background: var(--surface); border: 1px solid var(--border-lt);
       border-radius: 22px; padding: 32px; width: 100%; max-width: 440px;
@@ -264,12 +258,10 @@
       box-shadow: 0 32px 80px rgba(0,0,0,.6);
     }
     .popup-overlay.open .popup { transform: translateY(0) scale(1); }
-
     .popup::before {
       content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
       background: linear-gradient(90deg, transparent, var(--purple), transparent);
     }
-
     .popup-close {
       position: absolute; top: 16px; right: 16px;
       width: 32px; height: 32px; border-radius: 50%;
@@ -279,7 +271,6 @@
       transition: color .2s, border-color .2s;
     }
     .popup-close:hover { color: var(--ink); border-color: var(--border-lt); }
-
     .popup-avatar {
       width: 56px; height: 56px; border-radius: 50%;
       background: linear-gradient(135deg, var(--purple), var(--green));
@@ -289,11 +280,7 @@
     }
     .popup-name { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; margin-bottom: 4px; }
     .popup-sub  { font-size: 13px; color: var(--ink-muted); margin-bottom: 24px; }
-
-    .popup-stats {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 12px; margin-bottom: 24px;
-    }
+    .popup-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
     .popup-stat {
       background: var(--bg2); border: 1px solid var(--border);
       border-radius: 14px; padding: 16px;
@@ -302,8 +289,6 @@
     .popup-stat .value { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; }
     .popup-stat .value.green  { color: var(--green); }
     .popup-stat .value.purple { color: var(--purple2); }
-
-    .popup-cats { }
     .popup-cats .label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-muted); margin-bottom: 10px; }
     .popup-cat-item {
       display: flex; align-items: center; gap: 10px;
@@ -313,11 +298,9 @@
     .popup-cat-name { flex: 1; color: var(--ink-muted); }
     .popup-cat-val  { font-weight: 600; }
 
-    /* ── Footer ── */
     footer { margin-top: 32px; font-size: 12px; color: #33334A; text-align: center; }
     footer a { color: var(--purple); text-decoration: none; }
 
-    /* ── Responsive ── */
     @media (max-width: 720px) {
       .charts-grid { grid-template-columns: 1fr; }
       .chart-card.wide { grid-column: 1; }
@@ -354,31 +337,21 @@
     <!-- Filters -->
     <div class="filters">
       <span class="filter-label">Filtrar por:</span>
-
       <select class="filter-select" id="f-mes" onchange="applyFilters()">
         <option value="">Todos os meses</option>
-        <option value="01">Janeiro</option>
-        <option value="02">Fevereiro</option>
-        <option value="03">Março</option>
-        <option value="04">Abril</option>
-        <option value="05">Maio</option>
-        <option value="06">Junho</option>
-        <option value="07">Julho</option>
-        <option value="08">Agosto</option>
-        <option value="09">Setembro</option>
-        <option value="10">Outubro</option>
-        <option value="11">Novembro</option>
-        <option value="12">Dezembro</option>
+        <option value="01">Janeiro</option><option value="02">Fevereiro</option>
+        <option value="03">Março</option><option value="04">Abril</option>
+        <option value="05">Maio</option><option value="06">Junho</option>
+        <option value="07">Julho</option><option value="08">Agosto</option>
+        <option value="09">Setembro</option><option value="10">Outubro</option>
+        <option value="11">Novembro</option><option value="12">Dezembro</option>
       </select>
-
       <select class="filter-select" id="f-ano" onchange="applyFilters()">
         <option value="">Todos os anos</option>
       </select>
-
       <select class="filter-select" id="f-pessoa" onchange="applyFilters()">
         <option value="">Todos os solicitantes</option>
       </select>
-
       <span class="filter-badge" id="filter-badge"></span>
       <button class="btn-clear" id="btn-clear" onclick="clearFilters()">✕ Limpar filtros</button>
     </div>
@@ -389,7 +362,7 @@
         <div class="kpi-icon">📋</div>
         <div class="kpi-label">Lançamentos</div>
         <div class="kpi-value" id="kpi-count">—</div>
-        <div class="kpi-sub" id="kpi-count-sub">registros</div>
+        <div class="kpi-sub">registros</div>
       </div>
       <div class="kpi green">
         <div class="kpi-icon">💰</div>
@@ -414,7 +387,7 @@
     <!-- Charts -->
     <div class="charts-grid">
 
-      <!-- Barras por categoria -->
+      <!-- Colunas por categoria -->
       <div class="chart-card">
         <div class="chart-header">
           <div>
@@ -428,28 +401,32 @@
         </div>
       </div>
 
-      <!-- Ranking -->
+      <!-- Ranking top 5 -->
       <div class="chart-card">
         <div class="chart-header">
           <div>
-            <div class="chart-title">Ranking de solicitantes</div>
+            <div class="chart-title">Top 5 solicitantes</div>
             <div class="chart-sub">Clique em um nome para detalhes</div>
           </div>
-          <div class="sort-toggle">
-            <button class="sort-btn active" id="sort-desc" onclick="setSort('desc')">↓ Maior</button>
-            <button class="sort-btn" id="sort-asc"  onclick="setSort('asc')">↑ Menor</button>
+          <div class="toggle-group">
+            <button class="toggle-btn active" id="sort-desc" onclick="setSort('desc')">↓ Maior</button>
+            <button class="toggle-btn" id="sort-asc"  onclick="setSort('asc')">↑ Menor</button>
           </div>
         </div>
         <div id="ranking-list" class="ranking-list"></div>
         <div class="estado" id="empty-ranking" style="display:none"><p>Sem dados</p></div>
       </div>
 
-      <!-- Evolução -->
+      <!-- Evolução com toggle dia/mês -->
       <div class="chart-card wide">
         <div class="chart-header">
           <div>
             <div class="chart-title">Evolução dos gastos</div>
-            <div class="chart-sub">Total acumulado por data de lançamento</div>
+            <div class="chart-sub" id="evo-sub">Total acumulado por dia</div>
+          </div>
+          <div class="toggle-group">
+            <button class="toggle-btn active" id="evo-dia" onclick="setEvoMode('dia')">Por dia</button>
+            <button class="toggle-btn" id="evo-mes" onclick="setEvoMode('mes')">Por mês</button>
           </div>
         </div>
         <div class="chart-wrap tall">
@@ -467,13 +444,13 @@
   </div>
 
   <!-- Popup -->
-  <div class="popup-overlay" id="popup-overlay" onclick="closePopup(event)">
+  <div class="popup-overlay" id="popup-overlay" onclick="closePopupOutside(event)">
     <div class="popup" id="popup">
-      <button class="popup-close" onclick="closePopupDirect()">✕</button>
+      <button class="popup-close" onclick="closePopup()">✕</button>
       <div class="popup-avatar" id="popup-avatar"></div>
-      <div class="popup-name"  id="popup-name"></div>
-      <div class="popup-sub"   id="popup-sub"></div>
-      <div class="popup-stats" id="popup-stats"></div>
+      <div class="popup-name"   id="popup-name"></div>
+      <div class="popup-sub"    id="popup-sub"></div>
+      <div class="popup-stats"  id="popup-stats"></div>
       <div class="popup-cats">
         <div class="label">Por categoria</div>
         <div id="popup-cats-list"></div>
@@ -487,18 +464,18 @@
     const REFRESH_MS      = 60000;
     // ───────────────────────────────────────────────
 
-    const fmt      = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-    const fmtDate  = s => { if (!s) return '—'; const [y,m,d] = String(s).split('-'); return `${d}/${m}`; };
-    const palette  = ['#8B5CF6','#34D399','#FBBF24','#F87171','#60A5FA','#F472B6','#A3E635','#FB923C'];
-    const medals   = ['gold','silver','bronze'];
-    const meses    = ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    const fmt     = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+    const palette = ['#8B5CF6','#34D399','#FBBF24','#F87171','#60A5FA','#F472B6','#A3E635','#FB923C'];
+    const meses   = ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    const medals  = ['gold','silver','bronze'];
 
     let allData        = [];
+    let filteredData   = [];
     let sortDir        = 'desc';
+    let evoMode        = 'dia';   // 'dia' | 'mes'
     let chartCategoria = null;
     let chartEvolucao  = null;
     let ringInterval   = null;
-    let ringStart      = null;
 
     Chart.defaults.color       = '#6666A0';
     Chart.defaults.borderColor = '#24243A';
@@ -506,11 +483,11 @@
 
     // ── Ring ───────────────────────────────────────
     function startRing() {
-      const prog = document.getElementById('ring-prog');
-      ringStart  = Date.now();
+      const prog  = document.getElementById('ring-prog');
+      const start = Date.now();
       clearInterval(ringInterval);
       ringInterval = setInterval(() => {
-        const pct = Math.min((Date.now() - ringStart) / REFRESH_MS, 1);
+        const pct = Math.min((Date.now() - start) / REFRESH_MS, 1);
         prog.style.strokeDashoffset = 82 - 82 * pct;
         if (pct >= 1) clearInterval(ringInterval);
       }, 500);
@@ -529,16 +506,12 @@
     function populateFilters(dados) {
       const anos    = [...new Set(dados.map(d => String(d.data).slice(0,4)))].sort().reverse();
       const pessoas = [...new Set(dados.map(d => d.nome))].sort();
-
       const fAno    = document.getElementById('f-ano');
       const fPessoa = document.getElementById('f-pessoa');
-
       const anoSel    = fAno.value;
       const pessoaSel = fPessoa.value;
-
-      fAno.innerHTML    = '<option value="">Todos os anos</option>'    + anos.map(a => `<option value="${a}">${a}</option>`).join('');
+      fAno.innerHTML    = '<option value="">Todos os anos</option>'         + anos.map(a => `<option value="${a}">${a}</option>`).join('');
       fPessoa.innerHTML = '<option value="">Todos os solicitantes</option>' + pessoas.map(p => `<option value="${p}">${p}</option>`).join('');
-
       if (anoSel)    fAno.value    = anoSel;
       if (pessoaSel) fPessoa.value = pessoaSel;
     }
@@ -561,10 +534,8 @@
       const ano    = document.getElementById('f-ano').value;
       const pessoa = document.getElementById('f-pessoa').value;
       const active = [mes, ano, pessoa].filter(Boolean);
-
-      const badge   = document.getElementById('filter-badge');
-      const btnClear= document.getElementById('btn-clear');
-
+      const badge  = document.getElementById('filter-badge');
+      const btnCl  = document.getElementById('btn-clear');
       if (active.length) {
         const parts = [];
         if (mes)    parts.push(meses[parseInt(mes)]);
@@ -572,18 +543,17 @@
         if (pessoa) parts.push(pessoa);
         badge.textContent = parts.join(' · ');
         badge.classList.add('visible');
-        btnClear.classList.add('visible');
+        btnCl.classList.add('visible');
       } else {
         badge.classList.remove('visible');
-        btnClear.classList.remove('visible');
+        btnCl.classList.remove('visible');
       }
-      render(getFiltered());
+      filteredData = getFiltered();
+      render(filteredData);
     }
 
     function clearFilters() {
-      document.getElementById('f-mes').value    = '';
-      document.getElementById('f-ano').value    = '';
-      document.getElementById('f-pessoa').value = '';
+      ['f-mes','f-ano','f-pessoa'].forEach(id => document.getElementById(id).value = '');
       applyFilters();
     }
 
@@ -592,19 +562,26 @@
       sortDir = dir;
       document.getElementById('sort-desc').classList.toggle('active', dir === 'desc');
       document.getElementById('sort-asc').classList.toggle('active',  dir === 'asc');
-      render(getFiltered());
+      renderRanking(filteredData);
+    }
+
+    // ── Evo mode ───────────────────────────────────
+    function setEvoMode(mode) {
+      evoMode = mode;
+      document.getElementById('evo-dia').classList.toggle('active', mode === 'dia');
+      document.getElementById('evo-mes').classList.toggle('active', mode === 'mes');
+      document.getElementById('evo-sub').textContent = mode === 'dia'
+        ? 'Total acumulado por dia' : 'Total acumulado por mês';
+      renderEvolucao(filteredData);
     }
 
     // ── Popup ──────────────────────────────────────
-    function openPopup(nome, dados) {
-      const pessoaDados = dados.filter(d => d.nome === nome);
-      const total   = pessoaDados.reduce((s,d) => s + (parseFloat(d.valor)||0), 0);
-      const qtd     = pessoaDados.length;
-      const avg     = total / qtd;
-
-      // categorias
+    function openPopup(nome) {
+      const pd    = allData.filter(d => d.nome === nome);
+      const total = pd.reduce((s,d) => s + (parseFloat(d.valor)||0), 0);
+      const qtd   = pd.length;
       const catMap = {};
-      pessoaDados.forEach(d => { catMap[d.categoria] = (catMap[d.categoria]||0) + (parseFloat(d.valor)||0); });
+      pd.forEach(d => { catMap[d.categoria] = (catMap[d.categoria]||0)+(parseFloat(d.valor)||0); });
       const cats = Object.entries(catMap).sort((a,b) => b[1]-a[1]);
 
       document.getElementById('popup-avatar').textContent = nome.trim().charAt(0).toUpperCase();
@@ -617,107 +594,80 @@
         </div>
         <div class="popup-stat">
           <div class="label">Ticket médio</div>
-          <div class="value purple">${fmt.format(avg)}</div>
-        </div>
-      `;
-      document.getElementById('popup-cats-list').innerHTML = cats.map(([cat, val], i) => `
+          <div class="value purple">${fmt.format(total/qtd)}</div>
+        </div>`;
+      document.getElementById('popup-cats-list').innerHTML = cats.map(([cat,val],i) => `
         <div class="popup-cat-item">
-          <div class="popup-cat-dot" style="background:${palette[i % palette.length]}"></div>
+          <div class="popup-cat-dot" style="background:${palette[i%palette.length]}"></div>
           <div class="popup-cat-name">${cat}</div>
           <div class="popup-cat-val">${fmt.format(val)}</div>
-        </div>
-      `).join('');
+        </div>`).join('');
 
       document.getElementById('popup-overlay').classList.add('open');
     }
+    function closePopup()          { document.getElementById('popup-overlay').classList.remove('open'); }
+    function closePopupOutside(e)  { if (e.target === document.getElementById('popup-overlay')) closePopup(); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopup(); });
 
-    function closePopup(e) {
-      if (e.target === document.getElementById('popup-overlay'))
-        document.getElementById('popup-overlay').classList.remove('open');
-    }
-    function closePopupDirect() {
-      document.getElementById('popup-overlay').classList.remove('open');
-    }
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') document.getElementById('popup-overlay').classList.remove('open');
-    });
-
-    // ── Render ─────────────────────────────────────
-    function render(dados) {
-      // KPIs
-      if (!dados || !dados.length) {
-        ['kpi-count','kpi-total','kpi-avg','kpi-people'].forEach(id => document.getElementById(id).textContent = '—');
-        ['categoria','evolucao'].forEach(k => {
-          document.getElementById('empty-'+k).style.display = '';
-          const canvas = document.getElementById('chart-'+k);
-          if (canvas) canvas.style.display = 'none';
-        });
-        document.getElementById('empty-ranking').style.display = '';
-        document.getElementById('ranking-list').innerHTML = '';
-        document.getElementById('last-update').textContent = 'Sem dados para os filtros selecionados';
-        return;
-      }
-
-      const total  = dados.reduce((s,d) => s + (parseFloat(d.valor)||0), 0);
-      const avg    = total / dados.length;
-      const people = new Set(dados.map(d => d.nome)).size;
-
-      document.getElementById('kpi-count').textContent  = dados.length;
-      document.getElementById('kpi-total').textContent  = fmt.format(total);
-      document.getElementById('kpi-avg').textContent    = fmt.format(avg);
-      document.getElementById('kpi-people').textContent = people;
-      document.getElementById('last-update').textContent =
-        'Atualizado às ' + new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
-
-      // ── Barras por categoria ──
+    // ── Render helpers ─────────────────────────────
+    function renderCategoria(dados) {
       const catMap = {};
       dados.forEach(d => { catMap[d.categoria] = (catMap[d.categoria]||0)+(parseFloat(d.valor)||0); });
-      const catEntries = Object.entries(catMap).sort((a,b) => b[1]-a[1]);
-      const catLabels  = catEntries.map(e => e[0]);
-      const catVals    = catEntries.map(e => e[1]);
+      const entries = Object.entries(catMap).sort((a,b) => b[1]-a[1]);
 
-      document.getElementById('empty-categoria').style.display = 'none';
-      document.getElementById('chart-categoria').style.display = '';
+      document.getElementById('empty-categoria').style.display = entries.length ? 'none' : '';
+      document.getElementById('chart-categoria').style.display = entries.length ? '' : 'none';
+      if (!entries.length) return;
+
       if (chartCategoria) chartCategoria.destroy();
-      const ctxCat = document.getElementById('chart-categoria').getContext('2d');
-      chartCategoria = new Chart(ctxCat, {
+      const ctx = document.getElementById('chart-categoria').getContext('2d');
+      chartCategoria = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: catLabels,
+          labels: entries.map(e => e[0]),
           datasets: [{
-            data: catVals,
-            backgroundColor: palette.slice(0, catLabels.length).map(c => c + 'CC'),
-            borderColor:     palette.slice(0, catLabels.length),
+            data: entries.map(e => e[1]),
+            backgroundColor: entries.map((_,i) => palette[i % palette.length] + 'BB'),
+            borderColor:     entries.map((_,i) => palette[i % palette.length]),
             borderWidth: 1.5,
-            borderRadius: 8,
+            borderRadius: { topLeft: 8, topRight: 8 },
             borderSkipped: false,
           }]
         },
         options: {
           responsive: true, maintainAspectRatio: false,
+          indexAxis: 'x',
           plugins: {
             legend: { display: false },
             tooltip: { callbacks: { label: ctx => ' ' + fmt.format(ctx.raw) } }
           },
           scales: {
-            x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+            x: { grid:{display:false}, ticks:{font:{size:11}} },
             y: {
-              grid: { color: '#24243A' },
-              ticks: { font:{size:11}, callback: v => v>=1000 ? 'R$'+(v/1000).toFixed(1)+'k' : 'R$'+v }
+              grid:{color:'#24243A'},
+              ticks:{ font:{size:11}, callback: v => v>=1000 ? 'R$'+(v/1000).toFixed(1)+'k' : 'R$'+v }
             }
           }
         }
       });
+    }
 
-      // ── Ranking ──
+    function renderRanking(dados) {
       const pessoaMap = {};
       dados.forEach(d => { pessoaMap[d.nome] = (pessoaMap[d.nome]||0)+(parseFloat(d.valor)||0); });
-      let ranking = Object.entries(pessoaMap).sort((a,b) => sortDir === 'desc' ? b[1]-a[1] : a[1]-b[1]);
-      const maxVal = Math.max(...ranking.map(r => r[1]));
+      const allRanking = Object.entries(pessoaMap).sort((a,b) => sortDir==='desc' ? b[1]-a[1] : a[1]-b[1]);
+      const top5    = allRanking.slice(0, 5);
+      const restQtd = allRanking.length - 5;
+      const maxVal  = top5[0] ? top5[0][1] : 1;
 
-      document.getElementById('empty-ranking').style.display = 'none';
-      document.getElementById('ranking-list').innerHTML = ranking.map(([nome, val], i) => `
-        <div class="rank-item" onclick="openPopup('${nome.replace(/'/g,"\\'")}', allData)">
+      const empty = document.getElementById('empty-ranking');
+      const list  = document.getElementById('ranking-list');
+
+      if (!top5.length) { empty.style.display = ''; list.innerHTML = ''; return; }
+      empty.style.display = 'none';
+
+      list.innerHTML = top5.map(([nome, val], i) => `
+        <div class="rank-item" onclick="openPopup('${nome.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">
           <div class="rank-num ${medals[i]||''}">${i+1}</div>
           <div class="rank-name">${nome}</div>
           <div class="rank-bar-wrap">
@@ -725,29 +675,48 @@
           </div>
           <div class="rank-val">${fmt.format(val)}</div>
         </div>
-      `).join('');
+      `).join('') + (restQtd > 0 ? `<div class="rank-more">+ ${restQtd} outro${restQtd>1?'s':''} solicitante${restQtd>1?'s':''} não exibido${restQtd>1?'s':''}</div>` : '');
+    }
 
-      // ── Evolução ──
-      const dayMap = {};
+    function renderEvolucao(dados) {
+      const empty  = document.getElementById('empty-evolucao');
+      const canvas = document.getElementById('chart-evolucao');
+
+      if (!dados.length) { empty.style.display = ''; canvas.style.display = 'none'; return; }
+      empty.style.display = 'none'; canvas.style.display = '';
+
+      // agrupa por dia ou mês
+      const groupMap = {};
       dados.forEach(d => {
-        const key = String(d.data).slice(0,10);
-        dayMap[key] = (dayMap[key]||0)+(parseFloat(d.valor)||0);
+        const raw  = String(d.data).slice(0,10);   // yyyy-mm-dd
+        const key  = evoMode === 'dia' ? raw : raw.slice(0,7); // yyyy-mm
+        groupMap[key] = (groupMap[key]||0) + (parseFloat(d.valor)||0);
       });
-      const sortedDays = Object.keys(dayMap).sort();
-      let acc = 0;
-      const accVals = sortedDays.map(k => { acc += dayMap[k]; return acc; });
+      const sorted = Object.keys(groupMap).sort();
 
-      document.getElementById('empty-evolucao').style.display = 'none';
-      document.getElementById('chart-evolucao').style.display = '';
+      // labels formatados
+      const labels = sorted.map(k => {
+        if (evoMode === 'dia') {
+          const [y,m,d] = k.split('-'); return `${d}/${m}`;
+        } else {
+          const [y,m] = k.split('-'); return `${meses[parseInt(m)].slice(0,3)}/${y.slice(2)}`;
+        }
+      });
+
+      // acumulado
+      let acc = 0;
+      const accVals = sorted.map(k => { acc += groupMap[k]; return acc; });
+
       if (chartEvolucao) chartEvolucao.destroy();
-      const ctxEvo = document.getElementById('chart-evolucao').getContext('2d');
-      const grad   = ctxEvo.createLinearGradient(0,0,0,260);
-      grad.addColorStop(0, '#8B5CF640');
+      const ctx  = document.getElementById('chart-evolucao').getContext('2d');
+      const grad = ctx.createLinearGradient(0,0,0,270);
+      grad.addColorStop(0, '#8B5CF645');
       grad.addColorStop(1, '#8B5CF600');
-      chartEvolucao = new Chart(ctxEvo, {
+
+      chartEvolucao = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: sortedDays.map(fmtDate),
+          labels,
           datasets: [{
             label: 'Total acumulado',
             data: accVals,
@@ -757,8 +726,8 @@
             pointBackgroundColor: '#8B5CF6',
             pointBorderColor: '#14141E',
             pointBorderWidth: 2,
-            pointRadius: 5,
-            pointHoverRadius: 7,
+            pointRadius: evoMode === 'mes' ? 6 : 5,
+            pointHoverRadius: 8,
             fill: true, tension: .4,
           }]
         },
@@ -769,14 +738,38 @@
             tooltip: { callbacks: { label: ctx => ' ' + fmt.format(ctx.raw) } }
           },
           scales: {
-            x: { grid:{color:'#24243A'}, ticks:{font:{size:11}} },
+            x: { grid:{color:'#1E1E2E'}, ticks:{font:{size:11}} },
             y: {
-              grid: {color:'#24243A'},
-              ticks: { font:{size:11}, callback: v => v>=1000 ? 'R$'+(v/1000).toFixed(1)+'k' : 'R$'+v }
+              grid:{color:'#24243A'},
+              ticks:{ font:{size:11}, callback: v => v>=1000 ? 'R$'+(v/1000).toFixed(1)+'k' : 'R$'+v }
             }
           }
         }
       });
+    }
+
+    // ── Main render ────────────────────────────────
+    function render(dados) {
+      if (!dados || !dados.length) {
+        ['kpi-count','kpi-total','kpi-avg','kpi-people'].forEach(id => document.getElementById(id).textContent = '—');
+        document.getElementById('last-update').textContent = 'Sem dados para os filtros selecionados';
+        renderCategoria([]); renderRanking([]); renderEvolucao([]);
+        return;
+      }
+
+      const total  = dados.reduce((s,d) => s+(parseFloat(d.valor)||0), 0);
+      const people = new Set(dados.map(d => d.nome)).size;
+
+      document.getElementById('kpi-count').textContent  = dados.length;
+      document.getElementById('kpi-total').textContent  = fmt.format(total);
+      document.getElementById('kpi-avg').textContent    = fmt.format(total / dados.length);
+      document.getElementById('kpi-people').textContent = people;
+      document.getElementById('last-update').textContent =
+        'Atualizado às ' + new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+
+      renderCategoria(dados);
+      renderRanking(dados);
+      renderEvolucao(dados);
     }
 
     // ── Auto-refresh ───────────────────────────────
@@ -784,9 +777,10 @@
       startRing();
       const dados = await fetchData();
       if (dados !== null) {
-        allData = dados;
+        allData      = dados;
+        filteredData = getFiltered();
         populateFilters(allData);
-        render(getFiltered());
+        render(filteredData);
       }
       setTimeout(refresh, REFRESH_MS);
     }
@@ -795,4 +789,3 @@
   </script>
 </body>
 </html>
-
